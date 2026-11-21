@@ -1,3 +1,9 @@
 .directory__form {
   margin-top: var(--space-6);
 }
+
+@media (max-width: 48rem) {
+  .directory__form {
+    margin-top: var(--space-5);
+  }
+}

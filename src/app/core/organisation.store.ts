@@ -136,7 +136,10 @@ export class OrganisationStore {
   private async fetchPageSafely(page: number): Promise<Organisation[] | null> {
     try {
       const raw = await firstValueFrom(this.api.fetchPage(page));
-      const normalised = normaliseOrganisations(raw as RawOrganisation[]);
+      const normalised = normaliseOrganisations(raw as RawOrganisation[]).map((row) => ({
+        ...row,
+        key: `${page}-${row.key}`,
+      }));
       this.pages.update((pages) => ({ ...pages, [page]: normalised }));
       this.loadedPages.update((count) => count + raw.length);
       this.state.set('partial');

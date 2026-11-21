@@ -8,6 +8,7 @@
 
 .org-table {
   width: 100%;
+  min-width: 44rem;
   border-collapse: collapse;
 
   th,
@@ -30,6 +31,10 @@
     border-bottom: none;
   }
 
+  tbody tr:hover {
+    background: var(--color-info-soft);
+  }
+
   &__sort {
     display: inline-flex;
     align-items: center;
@@ -48,6 +53,7 @@
 
   &__num {
     text-align: end;
+    white-space: nowrap;
     font-variant-numeric: tabular-nums;
   }
 

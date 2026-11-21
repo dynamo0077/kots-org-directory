@@ -88,10 +88,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ng-scaffold:build:production"
+              "buildTarget": "org-directory:build:production"
             },
             "development": {
-              "buildTarget": "ng-scaffold:build:development"
+              "buildTarget": "org-directory:build:development"
             }
           },
           "defaultConfiguration": "development"
