@@ -1,0 +1,98 @@
+<form class="org-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <h2 class="org-form__title" id="form-heading">{{ i18n.t('form.title') }}</h2>
+
+  @if (errorList().length > 0) {
+    <div class="org-form__summary" role="alert">
+      <p class="org-form__summary-title">{{ i18n.t('form.errorSummary.title') }}</p>
+      <ul class="org-form__summary-list">
+        @for (item of errorList(); track item.field) {
+          <li>{{ i18n.t('form.errorSummary.item', { field: item.field, message: item.message }) }}</li>
+        }
+      </ul>
+    </div>
+  }
+
+  @if (success(); as message) {
+    <p class="org-form__success" role="status">{{ message }}</p>
+  }
+
+  <div class="org-form__field">
+    <label class="org-form__label" for="org-name">{{ i18n.t('form.name.label') }}</label>
+    <input
+      id="org-name"
+      class="org-form__input"
+      type="text"
+      formControlName="name"
+      [attr.aria-describedby]="'org-name-hint' + (showError('name') ? ' org-name-error' : '')"
+      [attr.aria-invalid]="showError('name')"
+    />
+    <p class="org-form__hint" id="org-name-hint">{{ i18n.t('form.name.hint') }}</p>
+    @if (showError('name'); as _shown) {
+      @if (errorKey('name'); as key) {
+        <p class="org-form__error" id="org-name-error">{{ i18n.t(key) }}</p>
+      }
+    }
+  </div>
+
+  <div class="org-form__field">
+    <label class="org-form__label" for="org-form-status">{{ i18n.t('form.status.label') }}</label>
+    <select
+      id="org-form-status"
+      class="org-form__input"
+      formControlName="status"
+      [attr.aria-describedby]="showError('status') ? 'org-form-status-error' : null"
+      [attr.aria-invalid]="showError('status')"
+    >
+      <option value="">{{ i18n.t('form.status.placeholder') }}</option>
+      @for (status of statuses; track status) {
+        <option [value]="status">{{ i18n.t('status.' + status) }}</option>
+      }
+    </select>
+    @if (showError('status')) {
+      @if (errorKey('status'); as key) {
+        <p class="org-form__error" id="org-form-status-error">{{ i18n.t(key) }}</p>
+      }
+    }
+  </div>
+
+  <div class="org-form__field">
+    <label class="org-form__label" for="org-owner">{{ i18n.t('form.owner.label') }}</label>
+    <input
+      id="org-owner"
+      class="org-form__input"
+      type="text"
+      formControlName="ownerEmail"
+      [attr.aria-describedby]="showError('ownerEmail') ? 'org-owner-error' : null"
+      [attr.aria-invalid]="showError('ownerEmail')"
+    />
+    @if (showError('ownerEmail')) {
+      @if (errorKey('ownerEmail'); as key) {
+        <p class="org-form__error" id="org-owner-error">{{ i18n.t(key) }}</p>
+      }
+    }
+  </div>
+
+  <div class="org-form__field">
+    <label class="org-form__label" for="org-members">{{ i18n.t('form.members.label') }}</label>
+    <input
+      id="org-members"
+      class="org-form__input"
+      type="text"
+      inputmode="numeric"
+      formControlName="memberCount"
+      [attr.aria-describedby]="'org-members-hint' + (showError('memberCount') ? ' org-members-error' : '')"
+      [attr.aria-invalid]="showError('memberCount')"
+    />
+    <p class="org-form__hint" id="org-members-hint">{{ i18n.t('form.members.hint') }}</p>
+    @if (showError('memberCount')) {
+      @if (errorKey('memberCount'); as key) {
+        <p class="org-form__error" id="org-members-error">{{ i18n.t(key) }}</p>
+      }
+    }
+  </div>
+
+  <div class="org-form__actions">
+    <button class="org-form__submit" type="submit">{{ i18n.t('form.submit') }}</button>
+    <button class="org-form__reset" type="button" (click)="reset()">{{ i18n.t('form.reset') }}</button>
+  </div>
+</form>
