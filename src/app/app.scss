@@ -1,0 +1,27 @@
+.app-header {
+  background: var(--color-surface);
+  border-bottom: var(--space-1) solid var(--color-border);
+
+  &__inner {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: var(--space-5) var(--space-4);
+  }
+
+  &__title {
+    margin: 0;
+    font-size: var(--font-size-2xl);
+    line-height: var(--line-height-tight);
+  }
+
+  &__subtitle {
+    margin: var(--space-2) 0 0;
+    color: var(--color-text-muted);
+  }
+}
+
+.app-main {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4) var(--space-7);
+}
