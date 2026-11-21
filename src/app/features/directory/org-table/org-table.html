@@ -1,0 +1,82 @@
+@if (store.rows().length > 0) {
+  <div class="table-wrap">
+    <table class="org-table">
+      <caption class="visually-hidden">{{ i18n.t('table.caption') }}</caption>
+      <thead>
+        <tr>
+          <th scope="col" [attr.aria-sort]="ariaSort('name')">
+            <button type="button" class="org-table__sort" (click)="toggleSort('name')">
+              {{ i18n.t('table.col.name') }}
+              <span class="org-table__sort-mark" aria-hidden="true">
+                @if (store.sortKey() === 'name') { {{ store.sortDir() === 'asc' ? '▲' : '▼' }} }
+              </span>
+            </button>
+          </th>
+          <th scope="col">{{ i18n.t('table.col.status') }}</th>
+          <th scope="col" class="org-table__num">{{ i18n.t('table.col.members') }}</th>
+          <th scope="col">{{ i18n.t('table.col.owner') }}</th>
+          <th scope="col" [attr.aria-sort]="ariaSort('createdAt')">
+            <button type="button" class="org-table__sort" (click)="toggleSort('createdAt')">
+              {{ i18n.t('table.col.created') }}
+              <span class="org-table__sort-mark" aria-hidden="true">
+                @if (store.sortKey() === 'createdAt') { {{ store.sortDir() === 'asc' ? '▲' : '▼' }} }
+              </span>
+            </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of store.view(); track row.key) {
+          <tr>
+            <td>
+              @if (row.name; as name) {
+                <span class="org-table__name" dir="auto" [title]="name">{{ name }}</span>
+              } @else {
+                <span class="org-table__missing">{{ i18n.t('table.unnamed') }}</span>
+              }
+              @for (flag of flagsFor(row, ['missing-name', 'duplicate-id']); track flag.code) {
+                <app-quality-note [flag]="flag" />
+              }
+            </td>
+            <td>
+              <app-status-indicator [status]="row.status" />
+              @for (flag of flagsFor(row, ['unknown-status']); track flag.code) {
+                <app-quality-note [flag]="flag" />
+              }
+            </td>
+            <td class="org-table__num">
+              @if (row.memberCount !== null) {
+                {{ row.memberCount }}
+              } @else {
+                <span class="org-table__missing">{{ i18n.t('table.noValue') }}</span>
+              }
+              @for (flag of flagsFor(row, ['coerced-member-count', 'invalid-member-count']); track flag.code) {
+                <app-quality-note [flag]="flag" />
+              }
+            </td>
+            <td>
+              @if (row.ownerEmail; as email) {
+                <span class="org-table__email" [class.org-table__email--invalid]="!row.ownerEmailValid">{{ email }}</span>
+              } @else {
+                <span class="org-table__missing">{{ i18n.t('table.noValue') }}</span>
+              }
+              @for (flag of flagsFor(row, ['missing-owner', 'invalid-email']); track flag.code) {
+                <app-quality-note [flag]="flag" />
+              }
+            </td>
+            <td>
+              @if (row.createdAt; as created) {
+                {{ created | date: 'mediumDate' }}
+              } @else {
+                <span class="org-table__missing">{{ row.rawCreatedAt || i18n.t('table.noValue') }}</span>
+              }
+              @for (flag of flagsFor(row, ['coerced-date', 'invalid-date']); track flag.code) {
+                <app-quality-note [flag]="flag" />
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

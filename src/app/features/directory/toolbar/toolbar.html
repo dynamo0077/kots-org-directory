@@ -1,0 +1,31 @@
+<div class="toolbar">
+  <div class="toolbar__search">
+    <label class="visually-hidden" for="org-search">{{ i18n.t('search.label') }}</label>
+    <input
+      id="org-search"
+      class="toolbar__input"
+      type="search"
+      [formControl]="search"
+      [placeholder]="i18n.t('search.placeholder')"
+    />
+  </div>
+
+  <div class="toolbar__filter">
+    <label class="toolbar__label" for="org-status">{{ i18n.t('filter.label') }}</label>
+    <select
+      id="org-status"
+      class="toolbar__select"
+      [value]="store.statusFilter()"
+      (change)="onStatusChange($any($event.target).value)"
+    >
+      <option value="all">{{ i18n.t('filter.all') }}</option>
+      @for (status of statuses; track status) {
+        <option [value]="status">{{ i18n.t('filter.' + status) }}</option>
+      }
+    </select>
+  </div>
+
+  <p class="toolbar__count" aria-live="polite">
+    {{ i18n.t('table.rowsShown', { shown: store.filteredCount(), total: store.totalRecords() }) }}
+  </p>
+</div>

@@ -1,0 +1,22 @@
+.quality {
+  display: inline-flex;
+  margin-inline-start: var(--space-1);
+  vertical-align: middle;
+  color: var(--color-status-suspended);
+
+  &__icon {
+    width: var(--space-3);
+    height: var(--space-3);
+  }
+
+  &__shape {
+    fill: none;
+    stroke: currentColor;
+    stroke-linejoin: round;
+    stroke-width: 1.5;
+  }
+
+  &__mark {
+    fill: currentColor;
+  }
+}

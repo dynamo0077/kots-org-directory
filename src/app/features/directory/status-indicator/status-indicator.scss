@@ -1,0 +1,39 @@
+.status {
+  display: inline-flex;
+  align-items: center;
+
+  &__mark {
+    width: var(--space-4);
+    height: var(--space-4);
+  }
+
+  &__fill {
+    fill: currentColor;
+  }
+
+  &__stroke {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+
+    &--dashed {
+      stroke-dasharray: 3 2;
+    }
+  }
+
+  &--active {
+    color: var(--color-status-active);
+  }
+
+  &--suspended {
+    color: var(--color-status-suspended);
+  }
+
+  &--inactive {
+    color: var(--color-status-inactive);
+  }
+
+  &--unknown {
+    color: var(--color-status-unknown);
+  }
+}
